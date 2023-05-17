@@ -10,6 +10,15 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<style>
+			pre code {
+				background-color: #eee;
+				border: 1px solid #999;
+				display: block;
+				padding: 1px;
+				text-align: left;
+			}
+		</style>
 	</head>
 	<body class="is-preload">
 		<!-- Nav -->
@@ -33,13 +42,147 @@
 					<p>Find out how the raw data was prepared and transformed<br/>before it can be used for analysis or machine learning tasks.</p>
 				</header>
 
-				<p>In order to transform our unstructured text data into a form fit for data analysis, 
-					there are several steps of preprocessing that need to be done. We begin with importing the data.</p>
+				
+				<h3>Handling Missing Values/Ensuring No Missing Values</h3>
+				<p>To ensure there are no missing values in the dataset, empty cells in the dataframe was replaced with a "NULL" string as such</p>
+				<pre>
+					<code>
+						import pandas as pd
+
+						data = pd.read_csv('Marcos Food Situation.csv')
+						data = data.replace(r'^\s*$', "NULL", regex=True)
+					</code>
+				</pre>
+<!-- 				
 				<p><code>import pandas as pd</br>
 					data = pd.read_csv('g23dataset.csv')</br>
 					data = data.iloc[:150]
 					data.head()</code></p>
-				<p></p>
+				<p></p> -->
+
+				<h3>Handling Outliers</h3>
+				<p>The data</p>
+				<pre>
+					<code>
+						import pandas as pd
+
+						data = pd.read_csv('Marcos Food Situation.csv')
+						data = data.replace(r'^\s*$', "NULL", regex=True)
+					</code>
+				</pre>
+
+				<h3>Ensuring formatting consistency (date, labels, etc.)</h3>
+				<p>The data</p>
+				<pre>
+					<code>
+						import pandas as pd
+
+						data = pd.read_csv('Marcos Food Situation.csv')
+						data = data.replace(r'^\s*$', "NULL", regex=True)
+					</code>
+				</pre>
+
+				<h3>Normalization/standardization/scaling</h3>
+				<p>The data</p>
+				<pre>
+					<code>
+						import pandas as pd
+
+						data = pd.read_csv('Marcos Food Situation.csv')
+						data = data.replace(r'^\s*$', "NULL", regex=True)
+					</code>
+				</pre>
+
+				<h3>Categorical data encoding</h3>
+				<p>The data</p>
+				<pre>
+					<code>
+						import numpy as np
+						import pandas as pd
+
+						mask = (data['Date posted'] > '01/06/2018 00:00') & (data['Date posted'] <= '25/06/2020 00:00')
+						datanew = data.loc[mask]
+						datanew.shape
+					</code>
+				</pre>
+			</div>
+		</article>
+
+		<!-- Data -->
+		<article id="data" class="wrapper style3">
+			<div class="container">
+				<header>
+					<h2>Natural Language Processing (NLP)</h2>
+					<p>To further make sense of the data, the preprocessed data</br>
+						uses NLP technique to understand the human language better.</p>
+				</header>
+				<h3>Tokenization and lower casing</h3>
+				<p>In order to transform our unstructured text data into a form fit for data analysis, there are several steps of preprocessing that need to be done. We begin with importing the data.</p>
+				<pre>
+					<code>
+						import pandas as pd
+						data = pd.read_csv('g23dataset.csv')
+						data = data.iloc[:150]
+						data.head()
+					</code>
+				</pre>
+				<pre>
+					<code>
+						data.shape
+					</code>
+				</pre>
+
+				<h3>Stop words removal</h3>
+				<p>It is important to tokenize the text to make sure NLP libraries can process the raw text. The Natural Language Toolkit (NLTK) python module will be used to tokenize the text. The text is transformed to lowercase to make sure the same word will not be treated as separate tokens during parsing. Punctuation and emoji will also be removed since they are not relevant in determining the main keywords used in the tweets. The stopwords will be removed using NLTK as a basis before tokenizing the text. To make sure that words with similar meanings are not treated as distinct tokens, it is also important to lemmatize the tokens. Lemmatization simplifies the word to its base meaning, known as its lemma, in order to have better results in data analysis. This allows similar words such as "better" and "good" to be processed as similar tokens. All of these preprocessing methods will be applied to the tweets in the dataframe.</p>
+				<pre>
+					<code>
+						# Import NLTK and make sure the relevant libraries are downloaded
+						import nltk
+						nltk.download('punkt')
+						nltk.download('stopwords')
+						nltk.download('wordnet')
+					</code>
+				</pre>
+
+				<pre>
+					<code>
+						# Extract the tweets
+						tweets = data['Tweet Translated'].dropna()
+
+						# Convert all tweets to lowercase
+						tweets = tweets.str.lower()
+
+						# Remove punctuation from tweets, remove stopwords then tokenize
+						from nltk.corpus import stopwords
+						from nltk.stem import WordNetLemmatizer
+						lemmatizer = WordNetLemmatizer()
+
+						processed_text = []
+
+						for text in tweets:
+							# Punctuation Removal
+							tok = ''.join([c for c in text if c.isalnum() or c == ' '])
+							
+							# Tokenization
+							tok_list = nltk.word_tokenize(tok)
+							
+							# Stopword Removal
+							tok_list = [word for word in tok_list if word not in stopwords.words('english')]
+							
+							# Lemmatization
+							tok_list = [lemmatizer.lemmatize(word) for word in tok_list]
+							
+							processed_text.append(tok_list)
+							
+						tweets = pd.DataFrame([processed_text])
+
+						tweets = tweets.transpose()
+						tweets.head()
+					</code>
+				</pre>
+
+				<h3>Stemming and lemmatization</h3>
+				<p>The data</p>
 			</div>
 		</article>
 
