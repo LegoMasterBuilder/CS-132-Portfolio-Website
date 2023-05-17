@@ -54,8 +54,9 @@
 					</code>
 				</pre>
 
-				<h3>Handling Outliers</h3>
+				<h3>Handling Outliers and Ensuring Formatting Consistency (date, labels, etc.)</h3>
 				<p>To only keep tweets that were posted from 2016 to 2022, the following code was used</p>
+				<p>Outliers, specifically those that were tweeted beyond the years of 2016 and 2022.</p>
 				<pre>
 					<code>
 	from datetime import datetime
@@ -74,8 +75,7 @@
 					</code>
 				</pre>
 
-				<h3>Ensuring formatting consistency (date, labels, etc.)</h3>
-				<p>The dates on the data set was properly arranged in a such a way that it would look like the following: YYYY-DD-MM HH:MM:SS</p>
+				<p>By making it a datetime object, the outliers were easily identified and removed. The dates on the data set was properly arranged in a such a way that it would look like the following: YYYY-DD-MM HH:MM:SS</p>
 				<pre>
 					<code>
 	import numpy as np
@@ -106,15 +106,38 @@
 				</pre>
 
 				<h3>Categorical data encoding</h3>
-				<p>The data</p>
+				<p>In order to process correctly categorical data, it must undergo categorical data encoding. Namely, the account types will be assigned with 1 for identified accounts (or accounts that have real names, bio and/or verified), 2 for anonymous accounts (or accounts that have pseudonyms, aliases, or untraceable names/bio) and 3 for media accounts (or those used by news outlets/personalities)</p>
+				<p>Moreover, tweet types are categorical encoded as follows: Text is assigned 1, Images are assigned 2, Tweets with videos are assigned 3, tweets with URLs are assigned 4 and replies are assigned 5</p>
+				<p>Lastly, the content types are assigned as follows: Rational content is 1, Emotional content is 2 and Transactional content is 3. </p>
 				<pre>
 					<code>
-	import numpy as np
-	import pandas as pd
-
-	mask = (data['Date posted'] > '01/06/2018 00:00') & (data['Date posted'] <= '25/06/2020 00:00')
-	datanew = data.loc[mask]
-	datanew.shape
+	# Categorizing Account Type
+	def categorizeAccount(word):
+		if word == 'Identified':
+			return 1
+		elif word == 'Anonymous':
+			return 2
+		return 3
+	
+	# Categorizing Tweet Type
+	def categorizeTweet(word):
+		if word == 'Text':
+			return 1
+		elif word == 'Image':
+			return 2
+		elif word == 'Video':
+			return 3
+		elif word == 'URL':
+			return 4
+		return 5
+	
+	# Categorizing Content Type
+	def categorizeContent(word):
+		if word == 'Rational':
+			return 1
+		elif word == 'Emotional':
+			return 2
+		return 3
 					</code>
 				</pre>
 			</div>
