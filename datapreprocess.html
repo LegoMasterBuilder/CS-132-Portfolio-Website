@@ -88,13 +88,20 @@
 				</pre>
 
 				<h3>Normalization/standardization/scaling</h3>
-				<p>The data</p>
+				<p>Creating and adding standardized columns of the 'Following' and 'Followers' columns in the dataset</p>
 				<pre>
 					<code>
-	import pandas as pd
+	# Create column called 'Following (Standardized)' which is the standardized version of the 'Following' column
+	data['Following (Standardized)'] = (data['Following'] - data['Following'].mean())
+	data['Following'].std()
 
-	data = pd.read_csv('Marcos Food Situation.csv')
-	data = data.replace(r'^\s*$', "NULL", regex=True)
+	# Create column called 'Followers (Standardized)' which is the standardized version of the 'Followers' column
+	data['Followers (Standardized)'] = (data['Followers'] - data['Followers'].mean())
+	data['Followers'].std()
+
+	# Create column called 'Likes (Standardized)' which is the standardized version of the 'Likes' column
+	data['Likes (Standardized)'] = (data['Likes'] - data['Likes'].mean())
+	data['Likes'].std()
 					</code>
 				</pre>
 
