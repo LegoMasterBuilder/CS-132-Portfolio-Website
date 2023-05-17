@@ -53,32 +53,37 @@
 						data = data.replace(r'^\s*$', "NULL", regex=True)
 					</code>
 				</pre>
-<!-- 				
-				<p><code>import pandas as pd</br>
-					data = pd.read_csv('g23dataset.csv')</br>
-					data = data.iloc[:150]
-					data.head()</code></p>
-				<p></p> -->
 
 				<h3>Handling Outliers</h3>
-				<p>The data</p>
+				<p>To only keep tweets that were posted from 2016 to 2022, the following code was used</p>
 				<pre>
 					<code>
-						import pandas as pd
+						from datetime import datetime
 
-						data = pd.read_csv('Marcos Food Situation.csv')
-						data = data.replace(r'^\s*$', "NULL", regex=True)
+						# Convert dates into Datetime Object
+						newDates = []
+						for index, row in data.iterrows():
+							newDate = datetime.strptime(data['Date posted'][index], '%d/%m/%Y %H:%M')
+							newDates.append(newDate)
+
+						# Update 'Date posted' column with Dates in Datetime Object Format
+						data['Date posted'] = newDates
+						# Take only tweets that were posted between 2016 and 2022 inclusive
+						mask = (data['Date posted'] >= '2016-01-01 00:00') & (data['Date posted'] <= '2022-12-31 00:00')
+						data = data.loc[mask]
 					</code>
 				</pre>
 
 				<h3>Ensuring formatting consistency (date, labels, etc.)</h3>
-				<p>The data</p>
+				<p>The dates on the data set was properly arranged in a such a way that it would look like the following: YYYY-DD-MM HH:MM:SS</p>
 				<pre>
 					<code>
+						import numpy as np
 						import pandas as pd
 
-						data = pd.read_csv('Marcos Food Situation.csv')
-						data = data.replace(r'^\s*$', "NULL", regex=True)
+						mask = (data['Date posted'] > '01/06/2018 00:00') & (data['Date posted'] <= '25/06/2020 00:00')
+						datanew = data.loc[mask]
+						datanew.shape
 					</code>
 				</pre>
 
@@ -132,7 +137,7 @@
 					</code>
 				</pre>
 
-				<h3>Stop words removal</h3>
+				<h3>Stop words removal/Stemming and lemmatization</h3>
 				<p>It is important to tokenize the text to make sure NLP libraries can process the raw text. The Natural Language Toolkit (NLTK) python module will be used to tokenize the text. The text is transformed to lowercase to make sure the same word will not be treated as separate tokens during parsing. Punctuation and emoji will also be removed since they are not relevant in determining the main keywords used in the tweets. The stopwords will be removed using NLTK as a basis before tokenizing the text. To make sure that words with similar meanings are not treated as distinct tokens, it is also important to lemmatize the tokens. Lemmatization simplifies the word to its base meaning, known as its lemma, in order to have better results in data analysis. This allows similar words such as "better" and "good" to be processed as similar tokens. All of these preprocessing methods will be applied to the tweets in the dataframe.</p>
 				<pre>
 					<code>
@@ -180,77 +185,8 @@
 						tweets.head()
 					</code>
 				</pre>
-
-				<h3>Stemming and lemmatization</h3>
-				<p>The data</p>
 			</div>
 		</article>
-
-		<!-- Team -->
-			<!-- <article id="team" class="wrapper style4">
-				<div class="container medium">
-					<header>
-						<h2>We'd like to hear from you.</h2>
-						<p>You can add more information about the team members here.</p>
-					</header>
-					<div class="row">
-						<div class="col-12">
-							<form method="post" action="#">
-								<div class="row">
-									<div class="col-6 col-12-small">
-										<input type="text" name="name" id="name" placeholder="Name" />
-									</div>
-									<div class="col-6 col-12-small">
-										<input type="text" name="email" id="email" placeholder="Email" />
-									</div>
-									<div class="col-12">
-										<input type="text" name="subject" id="subject" placeholder="Subject" />
-									</div>
-									<div class="col-12">
-										<textarea name="message" id="message" placeholder="Message"></textarea>
-									</div>
-									<div class="col-12">
-										<ul class="actions">
-											<li><input type="submit" value="Send Message" /></li>
-											<li><input type="reset" value="Clear Form" class="alt" /></li>
-										</ul>
-									</div>
-								</div>
-							</form>
-						</div>
-						<div class="col-12">
-							<hr />
-							<h3>Find me on ...</h3>
-							<ul class="social">
-								<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-								<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-								<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
-								<li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-								<li><a href="#" class="icon brands fa-tumblr"><span class="label">Tumblr</span></a></li>
-								<li><a href="#" class="icon brands fa-google-plus"><span class="label">Google+</span></a></li>
-								<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li> -->
-								<!--
-								<li><a href="#" class="icon solid fa-rss"><span>RSS</span></a></li>
-								<li><a href="#" class="icon brands fa-instagram"><span>Instagram</span></a></li>
-								<li><a href="#" class="icon brands fa-foursquare"><span>Foursquare</span></a></li>
-								<li><a href="#" class="icon brands fa-skype"><span>Skype</span></a></li>
-								<li><a href="#" class="icon brands fa-soundcloud"><span>Soundcloud</span></a></li>
-								<li><a href="#" class="icon brands fa-youtube"><span>YouTube</span></a></li>
-								<li><a href="#" class="icon brands fa-blogger"><span>Blogger</span></a></li>
-								<li><a href="#" class="icon brands fa-flickr"><span>Flickr</span></a></li>
-								<li><a href="#" class="icon brands fa-vimeo"><span>Vimeo</span></a></li>
-								-->
-							<!-- </ul>
-							<hr />
-						</div>
-					</div>
-					<footer>
-						<ul id="copyright">
-							<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-						</ul>
-					</footer>
-				</div>
-			</article> -->
 
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
