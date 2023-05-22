@@ -58,11 +58,49 @@
 
 				<h3>Plotting Token Count per Tweet</h3>
 				<p>
+                This can be used to roughly estimate the time and space complexity of data processing and analysis methods. This will be especially relevant when processing the tokens into n-grams or using methods that suffer from the curse of dimensionality. As sen in the plot below, around half of the tweets have token counts greater than or equal to 20, which might significantly increase processing time of the afforementioned methods.
+				<pre>
+					<code>
+# Get token counts of tweets
+tweet_token_count = []
+
+for i in range(len(tweets)):
+    tok_list = tweets[0][i]
+    tweet_token_count.append(len(tok_list))
+
+tok_count = []
+tok_count_freq = []
+
+for n in set(tweet_token_count):
+    tok_count.append(n)
+    tok_count_freq.append(tweet_token_count.count(n))
+
+# tok_count_df = pd.DataFrame.from_dict(tok_count_freq, orient='index')
+# tok_count_df.rename(columns = {0:'Token Count Frequency'}, inplace = True)
+tok_count_df = pd.DataFrame({'Token Count': tok_count, 'Frequency of Token Count': tok_count_freq})
+# tok_count_df
+
+# print(tok_count_freq)
+    
+# Plot token counts in Histogram
+
+import plotly.express as px
+fig = px.histogram(tok_count_df, x='Token Count', y='Frequency of Token Count', title='Frequency of Token Counts in Tweets')
+fig.show()
+fig.write_html("tokcountfreq.html")
+                    </code>
+                </pre>
+
+			<h4>Histogram of token count</h4>
+            <embed type="text/html" src="tokcountfreq.html" width="1000" height="800">
+			<p>This histogram shows the relationship between the token counts of the different tokenized words from the data set and their sume of frequency of token counts.</p>
+			
+				<h3>Plotting Token Count per Tweet</h3>
+				<p>
 					This can be used to roughly estimate the time and space complexity of data processing and analysis methods. This will be especially relevant when processing the tokens into n-grams or using methods that suffer from the curse of dimensionality. As sen in the plot below, around half of the tweets have token counts greater than or equal to 20, which might significantly increase processing time of the afforementioned methods.</p>
 				<pre>
 					<code>
-	# Get token counts of tweets
-	tweet_token_count = []
+					all_tokens = []
 
 	for i in range(len(tweets)):
 		tok_list = tweets[0][i]
@@ -84,19 +122,16 @@
 		
 	# Plot token counts in Histogram
 
-	import plotly.express as px
-	fig = px.histogram(tok_count_df, x='Token Count', y='Frequency of Token Count')
-	fig.show()
-	# df = px.data.tips()
-	# fig = px.histogram(df, x="total_bill")
-	# fig.show()
-
-	# print(df)
-					</code>
+import plotly.express as px
+fig = px.histogram(tok_freq_df, x='Token', y='Frequency of Token', title='Frequency of Tokens')
+fig.show()
+fig.write_html("tokfreq.html")
+                    </code>
 				</pre>
 
-			<h4>Histogram of token count</h4>
-			<img src="/images/visual1.png">
+			<h4>Histogram of token frequency</h4>
+            <embed type="text/html" src="tokfreq.html" width="1000" height="800">
+            <img src="Wordcloud.png">
 			<p>This histogram shows the relationship between the token counts of the different tokenized words from the data set and their sume of frequency of token counts.</p>
 			
 			</div>
