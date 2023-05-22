@@ -61,33 +61,32 @@
                 This can be used to roughly estimate the time and space complexity of data processing and analysis methods. This will be especially relevant when processing the tokens into n-grams or using methods that suffer from the curse of dimensionality. As sen in the plot below, around half of the tweets have token counts greater than or equal to 20, which might significantly increase processing time of the afforementioned methods.
 				<pre>
 					<code>
-# Get token counts of tweets
-tweet_token_count = []
+	# Get token counts of tweets
+	tweet_token_count = []
 
-for i in range(len(tweets)):
-    tok_list = tweets[0][i]
-    tweet_token_count.append(len(tok_list))
+	for i in range(len(tweets)):
+		tok_list = tweets[0][i]
+		tweet_token_count.append(len(tok_list))
 
-tok_count = []
-tok_count_freq = []
+	tok_count = []
+	tok_count_freq = []
 
-for n in set(tweet_token_count):
-    tok_count.append(n)
-    tok_count_freq.append(tweet_token_count.count(n))
+	for n in set(tweet_token_count):
+		tok_count.append(n)
+		tok_count_freq.append(tweet_token_count.count(n))
 
-# tok_count_df = pd.DataFrame.from_dict(tok_count_freq, orient='index')
-# tok_count_df.rename(columns = {0:'Token Count Frequency'}, inplace = True)
-tok_count_df = pd.DataFrame({'Token Count': tok_count, 'Frequency of Token Count': tok_count_freq})
-# tok_count_df
+	# tok_count_df = pd.DataFrame.from_dict(tok_count_freq, orient='index')
+	# tok_count_df.rename(columns = {0:'Token Count Frequency'}, inplace = True)
+	tok_count_df = pd.DataFrame({'Token Count': tok_count, 'Frequency of Token Count': tok_count_freq})
+	# tok_count_df
 
-# print(tok_count_freq)
-    
-# Plot token counts in Histogram
-
-import plotly.express as px
-fig = px.histogram(tok_count_df, x='Token Count', y='Frequency of Token Count', title='Frequency of Token Counts in Tweets')
-fig.show()
-fig.write_html("tokcountfreq.html")
+	# print(tok_count_freq)
+		
+	# Plot token counts in Histogram
+	import plotly.express as px
+	fig = px.histogram(tok_count_df, x='Token Count', y='Frequency of Token Count', title='Frequency of Token Counts in Tweets')
+	fig.show()
+	fig.write_html("tokcountfreq.html")
                     </code>
                 </pre>
 
@@ -95,12 +94,12 @@ fig.write_html("tokcountfreq.html")
             <embed type="text/html" src="tokcountfreq.html" width="1000" height="800">
 			<p>This histogram shows the relationship between the token counts of the different tokenized words from the data set and their sume of frequency of token counts.</p>
 			
-				<h3>Plotting Token Count per Tweet</h3>
-				<p>
-					This can be used to roughly estimate the time and space complexity of data processing and analysis methods. This will be especially relevant when processing the tokens into n-grams or using methods that suffer from the curse of dimensionality. As sen in the plot below, around half of the tweets have token counts greater than or equal to 20, which might significantly increase processing time of the afforementioned methods.</p>
-				<pre>
-					<code>
-					all_tokens = []
+			<h3>Plotting Token Count per Tweet</h3>
+			<p>
+				This can be used to roughly estimate the time and space complexity of data processing and analysis methods. This will be especially relevant when processing the tokens into n-grams or using methods that suffer from the curse of dimensionality. As sen in the plot below, around half of the tweets have token counts greater than or equal to 20, which might significantly increase processing time of the afforementioned methods.</p>
+			<pre>
+				<code>
+	all_tokens = []
 
 	for i in range(len(tweets)):
 		tok_list = tweets[0][i]
@@ -122,10 +121,10 @@ fig.write_html("tokcountfreq.html")
 		
 	# Plot token counts in Histogram
 
-import plotly.express as px
-fig = px.histogram(tok_freq_df, x='Token', y='Frequency of Token', title='Frequency of Tokens')
-fig.show()
-fig.write_html("tokfreq.html")
+	import plotly.express as px
+	fig = px.histogram(tok_freq_df, x='Token', y='Frequency of Token', title='Frequency of Tokens')
+	fig.show()
+	fig.write_html("tokfreq.html")
                     </code>
 				</pre>
 
@@ -134,6 +133,35 @@ fig.write_html("tokfreq.html")
             <img src="Wordcloud.png">
 			<p>This histogram shows the relationship between the token counts of the different tokenized words from the data set and their sume of frequency of token counts.</p>
 			
+			<h3>Frequency of Content Type</h3>
+			<p>
+				This chart gives an overview of the most common types of content associated with the tweets on the food situation during the time of Ferdinand Marcos Sr. 
+				It can be in the form of a rational, emotional or transactional content type of tweet.
+			</p>
+			<pre>
+				<code>
+	contentType = data['Content type'].value_counts()
+	contentCat = ['Rational', 'Emotional', 'Transactional']
+
+	# Get the frequency of each content type
+	contentFreq = []
+	for category in contentCat:
+		try:
+			contentFreq.append(contentType[category])
+		except KeyError:
+			contentFreq.append(0)
+
+	# Create dataframe consisting of the different content types and their frequencies
+	dataContent = pd.DataFrame({'Content type' : contentCat,
+								'Frequency' : contentFreq},
+							columns=['Content type', 'Frequency'])
+
+	# Show bar plot of dataContent dataframe
+	dataContent.plot.bar(x='Content type', y='Frequency', rot=0, title='Bar Chart showing the Frequency of Content Types')
+				</code>
+			</pre>
+			<img src="images/visual2.png">
+
 			</div>
 		</article>
 
