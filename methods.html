@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<!--
+	Miniport by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>PH Twitter Fake News Analysis</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<style>
+			pre code {
+				background-color: #eee;
+				border: 1px solid #000;
+				display: block;
+				padding: 1px;
+				text-align: left;
+			}
+		</style>
+	</head>
+	<body class="is-preload">
+		<!-- Nav -->
+			<nav id="nav">
+				<ul class="container">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="about.html">About</a></li>
+					<li><a href="datapreprocess.html">Data</a></li>
+					<li><a href="methods.html">Methods</a></li>
+					<li><a href="visualization.html">Visualization</a></li>
+					<li><a href="results.html">Results</a></li>
+					<li><a href="conclusions.html">Conclusions</a></li>
+				</ul>
+			</nav>
+
+		<!-- Home -->
+
+		<!-- Conclusion and Implications -->
+		<article id="results" class="wrapper style3">
+			<div class="container">
+				<header>
+					<h2>How was the research conducted?</h2>
+				</header>
+
+				<p>Our research followed a standard data science methodology. We began by collecting Twitter data from 2016 to 2022 
+					using Twitter APIs. The extracted raw data was stored in a Google Sheet document, including information such as bio, 
+					account name, account type, location, date created, and time posted. We then proceeded with NLP preprocessing techniques, 
+					which involved removing irrelevant information like URLs, usernames, and special characters. Additionally, we lowercased
+					the text, performed lemmatization, and eliminated stopwords. To ensure consistency, we translated Filipino tweets to English,
+					it is also here where we fixed wrong spelling of terms.</p>
+
+                <header>
+					<h2>What is the data about?</h2>
+				</header>
+                <p>The dataset used in our research consists of Twitter data spanning from 2016 to 2022. 
+					It includes a variety of information associated with each tweet, such as user bio, account name, account type, 
+					location, date created, and time posted. The focus of the research was to analyze tweets related to the food 
+					situation during the Ferdinand Marcos regime, specifically targeting potential misinformation about it.</p>
+
+				<header>
+					<h2>What methods did you use to collect and analyze the data?</h2>
+				</header>
+				<p>To collect the data, we employed Twitter APIs, which allowed us to access and extract relevant information from Twitter. 
+					The extracted data was then organized and stored in a Google Sheet document for further analysis. For data analysis, 
+					we utilized several methods. Firstly, we performed NLP preprocessing steps to clean the collected tweet data, including 
+					removing irrelevant information, lowercasing, lemmatization, and stopword removal. Additionally, we took the necessary 
+					step of translating Filipino tweets into English to maintain consistency. After preprocessing, we applied the TF-IDF 
+					vectorization technique to convert the preprocessed tweet data into numerical feature vectors. Subsequently, we employed
+					Latent Dirichlet Allocation (LDA) as a topic modeling technique to identify latent topics within the tweet data. To visualize 
+					the resulting clusters, we employed t-SNE for dimensionality reduction, reducing the high-dimensional feature vectors to 
+					two dimensions. Finally, we used Plotly Express, a data visualization library, to create interactive visualizations that 
+					effectively showcased the identified clusters in the reduced 2D space.</p>
+			</div>
+		</article>
+
+		<!-- Team -->
+		<article id="team" class="wrapper style4">
+			<footer>
+				<ul id="copyright">
+					<li>&copy; Nutribuns. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+				</ul>
+			</footer>
+		</article>
+
+				
+	</body>
+</html>
